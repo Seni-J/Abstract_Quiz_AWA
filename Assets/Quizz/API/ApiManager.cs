@@ -144,9 +144,7 @@ public abstract class ApiManager: ApiManagerStructure
     {
         string json_quizzes = NetworkRequestManager.HttpGetRequest(apiQuizzesUrl);
 
-        UnityEngine.Debug.Log(json_quizzes);
         CheckIfNullAndLog(json_quizzes, $"[WARNING]: Response for {GetActualMethodName()} is null");
-
 
         Quizzes quizzesData = child.SerializeQuizzes(json_quizzes);
 

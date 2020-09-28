@@ -44,12 +44,19 @@ public class NetworkRequestManager : MonoBehaviour
             StreamReader reader = new StreamReader(ReceiveStream, System.Text.Encoding.UTF8);
             return reader.ReadToEnd();
         }
-        catch (WebException e)
+        catch (WebException ex)
         {
-            var resp = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
+            if (ex.Response == null || ex.Status != WebExceptionStatus.ProtocolError)
+                throw;
+
+            Stream ReceiveStream = ex.Response.GetResponseStream();
+            StreamReader reader = new StreamReader(ReceiveStream, System.Text.Encoding.UTF8);
+            return reader.ReadToEnd();
+
+            /*var resp = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
             Debug.LogError("[WebException]: " + e.Message + "\n" + resp);
             lastHttpWebRequestErrorMessage = e.Message + "\n" + resp;
-            return null;
+            return null;*/
         }
     }
 

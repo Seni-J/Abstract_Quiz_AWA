@@ -13,7 +13,7 @@ public class HerokuApiModel : MonoBehaviour
     public class QuizzesInAPI : Quizzes
     {
         public List<QuizzInAPI> quizzes = new List<QuizzInAPI>();
-
+        
         public override void MapAPIValuesToAbstractClass()
         {
             foreach (QuizzInAPI quizzData in this.quizzes)
