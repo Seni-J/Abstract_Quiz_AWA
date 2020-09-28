@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Cache;
 using System.Text;
 using System.Web;
 using UnityEngine;
@@ -19,11 +20,16 @@ public class NetworkRequestManager : MonoBehaviour
         try
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
+          
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+            req.CachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
             req.Accept = "text/xml,text/plain,text/html,application/json";
+            /*req.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+            req.Headers.Add("Pragma", "no-cache");
+            req.Headers.Add("Expires", "0"); */
             req.Method = "GET";
             req.Timeout = 2000;
+ 
 
             if (GameManager.Instance.GetApiManager().HasToHaveToken())
             {
@@ -31,6 +37,7 @@ public class NetworkRequestManager : MonoBehaviour
                 SetTokenAccordingToEmplacement(ref req, "GET", ref postData, GameManager.Instance.GetApiManager().GetTokenttpEmplacement());
             }
 
+            Debug.Log(req.GetResponse());
             HttpWebResponse result = (HttpWebResponse)req.GetResponse();
 
             Stream ReceiveStream = result.GetResponseStream();

@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Runtime.CompilerServices;
 using static AbstractQuizzStructure;
+using System.Diagnostics;
 
 static class Constants
 {
@@ -143,6 +144,7 @@ public abstract class ApiManager: ApiManagerStructure
     {
         string json_quizzes = NetworkRequestManager.HttpGetRequest(apiQuizzesUrl);
 
+        UnityEngine.Debug.Log(json_quizzes);
         CheckIfNullAndLog(json_quizzes, $"[WARNING]: Response for {GetActualMethodName()} is null");
 
 
@@ -167,7 +169,7 @@ public abstract class ApiManager: ApiManagerStructure
             apiDataModelEndpointType == ApiDataModelEndpointType.PartiallyNested ||
             !DoUrlsHaveQuizzIdAndQuestionIdInThem())
         {
-            Debug.Log(
+			UnityEngine.Debug.Log(
                 $"[WARNING]: Your api seems to be Fully or Partially nested because you set it like this or you didn't define {{quizzId}} and {{questionId}} in api urls\n" +
                 $"In this case the code could not work and you should override GetQuestionsForQuizz method should be overriden in the class that inherits from ApiManager. There, you should implement how questions are retrieved and return them. Look at documentation for examples"
                 );
@@ -202,7 +204,7 @@ public abstract class ApiManager: ApiManagerStructure
             apiDataModelEndpointType == ApiDataModelEndpointType.PartiallyNested ||
             !DoUrlsHaveQuizzIdAndQuestionIdInThem())
         {
-            Debug.Log(
+			UnityEngine.Debug.Log(
                 $"[WARNING]: Your api seems to be Fully or Partially nested because you set it like this or you didn't define {{quizzId}} and {{questionId}} in api urls\n" +
                 $"In this case the code could not work and you should override GetAnswersForQuestion method should be overriden in the class that inherits from ApiManager. There, you should implement how questions are retrieved and return them. Look at documentation for examples"
                 );
@@ -428,10 +430,10 @@ public abstract class ApiManager: ApiManagerStructure
             switch (type)
             {
                 case 0:
-                    Debug.LogError(log);
+					UnityEngine.Debug.LogError(log);
                     break;
                 case 1:
-                    Debug.Log(log);
+					UnityEngine.Debug.Log(log);
                     break;
             }
         }
