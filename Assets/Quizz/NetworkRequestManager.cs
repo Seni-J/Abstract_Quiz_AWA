@@ -37,8 +37,8 @@ public class NetworkRequestManager : MonoBehaviour
                 SetTokenAccordingToEmplacement(ref req, "GET", ref postData, GameManager.Instance.GetApiManager().GetTokenttpEmplacement());
             }
 
-            Debug.Log(req.GetResponse());
             HttpWebResponse result = (HttpWebResponse)req.GetResponse();
+
 
             Stream ReceiveStream = result.GetResponseStream();
             StreamReader reader = new StreamReader(ReceiveStream, System.Text.Encoding.UTF8);

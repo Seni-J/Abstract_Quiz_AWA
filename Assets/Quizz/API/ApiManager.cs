@@ -181,7 +181,6 @@ public abstract class ApiManager: ApiManagerStructure
 
         CheckIfNullAndLog(json_questions, $"[WARNING]: Response for {GetActualMethodName()} is null");
 
-
         Questions questionsData = child.SerializeQuestions(json_questions);
         questionsData.MapAPIValuesToAbstractClass(); // Maps the values from ApiModel to Questions. The mapping is defined in api model class that inherits from Questions
 

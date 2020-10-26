@@ -37,11 +37,11 @@ public class KwizApiModel : MonoBehaviour
     [Serializable]
     public class QuestionsInAPI : Questions
     {
-        public List<QuestionInAPI> questions = new List<QuestionInAPI>();
+        public List<QuestionInAPI> data = new List<QuestionInAPI>();
 
         public override void MapAPIValuesToAbstractClass()
         {
-            foreach (QuestionInAPI questionData in this.questions)
+            foreach (QuestionInAPI questionData in this.data)
             {
                 questionData.MapAPIValuesToAbstractClass();
                 base.AddQuestion(questionData);
@@ -64,34 +64,15 @@ public class KwizApiModel : MonoBehaviour
     }
 
     [Serializable]
-    public class AnswersInAPI : Answers
-    {
-        public List<AnswerInAPI> answers = new List<AnswerInAPI>();
-
-        public override void MapAPIValuesToAbstractClass()
-        {
-            foreach (AnswerInAPI answerData in this.answers)
-            {
-                answerData.MapAPIValuesToAbstractClass(); // Map values
-                base.AddAnswer(answerData);
-            }
-        }
-    }
-
-    [Serializable]
     public class AnswerInAPI : Answer
     {
-        public int id; 
-        public int questionId;
-        public int quizzId;
-        public string answer;
-        public bool rightAnswer;
-        
+        public string name;
+        public bool value;
 
         public override void MapAPIValuesToAbstractClass()
         {
-            base.SetDataToShowAsPossibleAnswer(answer);
-            base.SetIsCorrectAnswer(rightAnswer);
+            base.SetDataToShowAsPossibleAnswer(name);
+            base.SetIsCorrectAnswer(value);
         }
     }
 }

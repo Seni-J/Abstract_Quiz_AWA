@@ -4,6 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static AbstractQuizzStructure;
+using static KwizApiModel;
 
 public class KwizApi : ApiManager
 {
@@ -38,8 +39,36 @@ public class KwizApi : ApiManager
         return (Questions)JsonUtility.FromJson<KwizApiModel.QuestionsInAPI>(jsonData);
     }
 
-    public override Answers SerializeAnswers(string jsonData)
+    public override Answers GetAnswersForQuestion(object quizzId, object questionId)
     {
-        return (Answers)JsonUtility.FromJson<KwizApiModel.AnswersInAPI>(jsonData);
+        // Replace {quizzId} and {questionid} in the link
+        base.apiAnswersUrl = base._originalApiAnswersUrl.Replace("{quizzId}", quizzId.ToString()).Replace("{questionId}", questionId.ToString());
+
+        string json_questions_with_answers = NetworkRequestManager.HttpGetRequest(apiAnswersUrl);
+
+        CheckIfNullAndLog(json_questions_with_answers, $"[WARNING]: Response for {GetActualMethodName()} is null");
+
+
+        KwizApiModel.QuestionsInAPI questionsData = JsonUtility.FromJson<KwizApiModel.QuestionsInAPI>(json_questions_with_answers);
+
+        Answers answers = new Answers();
+        // Let's begin to search the questionId we need in this case
+        foreach (QuestionInAPI questionData in questionsData.data)
+        {
+            Debug.Log(questionData.question);
+            /*if (questionId.ToString() == questionData.id)
+            {
+                // Now that we found the question with the questionId we need, let's get all answers 
+                foreach (AnswerInAPI answerData in questionData.answers)
+                {
+                    answerData.MapAPIValuesToAbstractClass();
+                    answers.AddAnswer(answerData);
+                }
+
+                return answers;
+            }*/
+        }
+
+        return null;
     }
 }

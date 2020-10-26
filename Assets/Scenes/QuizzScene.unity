@@ -6111,8 +6111,8 @@ MonoBehaviour:
   rootApiUrl: http://api.kwiz.mycpnv.ch/
   apiQuizzesUrl: http://api.kwiz.mycpnv.ch/api/quizzes
   apiQuestionsUrl: http://api.kwiz.mycpnv.ch/api/quizzes/{quizzId}/questions
-  apiAnswersUrl: http://api.kwiz.mycpnv.ch/api/quizzes/{quizzId}/questions/{questionId}/answers
-  apiDataModelEndpointType: 2
+  apiAnswersUrl: http://api.kwiz.mycpnv.ch/api/quizzes/{quizzId}/questions/
+  apiDataModelEndpointType: 1
   hasToHaveTokenForApi: 1
   hasToLoginToGetToken: 0
   canRegisterAsUserToApi: 0
