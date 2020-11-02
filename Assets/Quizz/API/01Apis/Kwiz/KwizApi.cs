@@ -17,9 +17,9 @@ public class KwizApi : ApiManager
         base.rootApiUrl = "http://api.kwiz.mycpnv.ch/api";
         base.apiQuizzesUrl = rootApiUrl + "/quizzes";
         base.apiQuestionsUrl = rootApiUrl + "/quizzes/{quizzId}/questions";
-        base.apiAnswersUrl = rootApiUrl + "/quizzes/{quizzId}/questions/{questionId}/answers";
+        base.apiAnswersUrl = base.apiQuestionsUrl;
 
-        base.apiDataModelEndpointType = ApiDataModelEndpointType.EachModelHasAnEndpoint;
+        base.apiDataModelEndpointType = ApiDataModelEndpointType.PartiallyNested;
 
         // Set the configuration needed for the API token.
         base.hasToHaveTokenForApi = true;
@@ -55,8 +55,8 @@ public class KwizApi : ApiManager
         // Let's begin to search the questionId we need in this case
         foreach (QuestionInAPI questionData in questionsData.data)
         {
-            Debug.Log(questionData.question);
-            /*if (questionId.ToString() == questionData.id)
+            Debug.Log(questionId);
+            if (questionId.ToString() == questionData.id.ToString())
             {
                 // Now that we found the question with the questionId we need, let's get all answers 
                 foreach (AnswerInAPI answerData in questionData.answers)
@@ -66,7 +66,7 @@ public class KwizApi : ApiManager
                 }
 
                 return answers;
-            }*/
+            }
         }
 
         return null;

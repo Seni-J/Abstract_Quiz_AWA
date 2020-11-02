@@ -53,12 +53,12 @@ public class KwizApiModel : MonoBehaviour
     public class QuestionInAPI : Question
     {
         public int id;
-        public int quizzId;
         public string question;
+        public List<AnswerInAPI> answers = new List<AnswerInAPI>();
 
         public override void MapAPIValuesToAbstractClass()
         {
-            base.SetQuestionid(id);
+            base.SetQuestionid(this.id);
             base.SetQuestionText(question);
         }
     }
@@ -66,13 +66,13 @@ public class KwizApiModel : MonoBehaviour
     [Serializable]
     public class AnswerInAPI : Answer
     {
-        public string name;
-        public bool value;
+        public string value;
+        public bool correct;
 
         public override void MapAPIValuesToAbstractClass()
         {
-            base.SetDataToShowAsPossibleAnswer(name);
-            base.SetIsCorrectAnswer(value);
+            base.SetDataToShowAsPossibleAnswer(value);
+            base.SetIsCorrectAnswer(correct);
         }
     }
 }
